@@ -6,7 +6,7 @@
 /*   By: abobeida <abobeida@learner.42.tech>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/19 14:21:45 by abobeida          #+#    #+#             */
-/*   Updated: 2026/10/21 11:41:15 by abobeida         ###   ########.fr       */
+/*   Updated: 2026/10/26 15:29:37 by abobeida         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	*ft_read_stash(int fd, char *stash)
 	buffer = malloc(BUFFER_SIZE + 1);
 	if (!buffer)
 		return (free(stash), NULL);
-	while (!ft_strchr(stash, 'B'))
+	while (!ft_strchr(stash, '\n'))
 	{
 		bytes = read(fd, buffer, BUFFER_SIZE);
 		if (bytes <= 0)
@@ -48,9 +48,9 @@ static char	*ft_extract_line(char *stash)
 
 	i = 0;
 	j = 0;
-	while (stash[i] && stash[i] != 'B')
+	while (stash[i] && stash[i] != 'n')
 		i++;
-	if (stash[i] == 'B')
+	if (stash[i] == 'n')
 		i++;
 	line = malloc(i + 1);
 	if (!line)
@@ -70,7 +70,7 @@ static char	*ft_update_stash(char *stash)
 	size_t	i;
 
 	i = 0;
-	while (stash[i] && stash[i] != 'B')
+	while (stash[i] && stash[i] != '\n')
 		i++;
 	if (stash[i] == '\0' || stash[i + 1] == '\0')
 		return (free(stash), NULL);
